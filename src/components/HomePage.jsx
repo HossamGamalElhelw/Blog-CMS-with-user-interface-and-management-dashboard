@@ -1,5 +1,4 @@
 import React from 'react'
-import './HomePage.css'
 
 function HomePage() {
     const NUMBER_POSTS = 10;
