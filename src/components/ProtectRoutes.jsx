@@ -4,6 +4,7 @@ import { TokenContext } from './TokenContext';
 import HomePage from './HomePage';
 import Dashboard from './Dashboard';
 import Login from './Login';
+import Signup from './Signup';
 
 function ProtectedRoutes() {
     const { token } = useContext(TokenContext);     
@@ -19,6 +20,7 @@ function ProtectedRoutes() {
             <>
                 <Route path="*" element={<Login />} />
                 <Route path="/Login" element={<Login />} />
+                <Route path='/Signup' element={<Signup />} />
             </>
         )}
         </Routes>

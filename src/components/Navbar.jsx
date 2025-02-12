@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { TokenContext } from './TokenContext'
-import { Link, useNavigate } from 'react-router-dom'
+import {  useNavigate } from 'react-router-dom'
 
 function Navbar() {
   const {token,setToken} = useContext(TokenContext)
@@ -21,6 +21,7 @@ function Navbar() {
           {!token ? (
             <>
               <button className='cursor-pointer' onClick={()=> navigate('/Login')}>Login</button>
+              <button className='cursor-pointer' onClick={()=> navigate('/Signup')}>Signup</button>
             </>
               )
             : ( 
