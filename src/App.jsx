@@ -1,33 +1,20 @@
-import React, { useState } from 'react';
-import './App.css'
-import HomePage from './components/HomePage';
+import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
+import { TokenProvider } from './components/TokenContext';
 import Navbar from './components/Navbar';
-import Dashboard from './components/Dashboard';
-import Login from './components/Login';
-import { BrowserRouter, Routes,Route } from 'react-router-dom';
+import ProtectedRoutes from './components/ProtectRoutes';
 
 function App() {
-
-  const [token, setToken] = useState(null);
-  
   return (
+    <TokenProvider>
       <BrowserRouter>
-        <header>
-          <Navbar />
-        </header>
-        <main>
-          <Routes>
-            {!token ? (<Route path='/*' element={<Login setToken={setToken} />} /> ): (
-              <>
-                <Route path="/" element={<Login />} />
-                <Route path='/HomePage' element={<HomePage />} />
-                <Route path='/Dashboard' element={<Dashboard />} />
-              </>
-          )}
-          </Routes>
-        </main>
+      <header>
+        <Navbar />
+      </header>
+      <ProtectedRoutes />
       </BrowserRouter>
-  )
+    </TokenProvider>
+  );
 }
 
-export default App
+export default App;

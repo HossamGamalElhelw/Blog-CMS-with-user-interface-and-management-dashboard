@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import './Login.css';
+import { useNavigate } from 'react-router-dom';
+import { TokenContext } from './TokenContext';
+import { z } from 'zod';
 
 
 async function LoginUser(credentials) {
@@ -21,9 +24,11 @@ async function LoginUser(credentials) {
         }
 }
 
-function Login({setToken}) {
+function Login() {
+    const {setToken} = useContext(TokenContext)
     const [userNameValue , setUserNameValue] = useState('');
     const [passwordValue , setPasswordValue] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -33,12 +38,16 @@ function Login({setToken}) {
             return;
         }
         try{
-            const token = await LoginUser({
+            const res = await LoginUser({
                 username: userNameValue,
                 password: passwordValue
             })
-            if(token){
-                setToken(token);
+            console.log('Login res:', res); 
+            if(res?.data){
+                setToken(res.data);
+                setUserNameValue('');
+                setPasswordValue('');
+                navigate('/HomePage');
                 alert('successful login')
             }else{
                 alert('invalid user');
@@ -47,7 +56,7 @@ function Login({setToken}) {
             console.error('error is',error);
         }
     };
-
+    
     return (
         <div className="login_container flex flex-col gap-2 justify-center items-center h-screen">
             <div className="login p-10 w-100 h-90 border border-gray-300 rounded-lg shadow-md bg-white">

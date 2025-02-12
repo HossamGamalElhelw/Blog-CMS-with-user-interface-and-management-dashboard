@@ -2,7 +2,7 @@ import React from 'react'
 import PostsComponent from './PostsComponent'
 
 function Dashboard() {
-  
+
   return (
     <div className='dashboard_container flex'>
         <div className="sidebar bg-gray-900 w-xs h-screen p-8 flex flex-col gap-8">
