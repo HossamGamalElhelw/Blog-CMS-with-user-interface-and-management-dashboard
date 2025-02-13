@@ -1,12 +1,13 @@
 import React from 'react'
 import PostsComponent from './PostsComponent'
+import UsersComponent from './UsersComponent'
 
 function Dashboard() {
 
   return (
-    <div className='dashboard_container flex'>
-        <div className="sidebar bg-gray-900 w-xs h-screen p-8 flex flex-col gap-8">
-          <div className="posts flex gap-4 items-center">
+    <div className='dashboard_container flex text-black'>
+        <div className="sidebar bg-white w-xs h-screen p-8 flex flex-col gap-8">
+          <div className="posts flex gap-4 items-center cursor-pointer">
             <picture className='sidebar_picture'><img className='sidebar_img w-10' src="/posts.png" alt="posts_img" /></picture>
             <p>Posts</p>
           </div>
@@ -20,7 +21,8 @@ function Dashboard() {
           </div>
         </div>
         <div className="dashboard_content w-full p-8">
-          <PostsComponent />
+          {/* <PostsComponent /> */}
+          {<UsersComponent />}
         </div>
     </div>
   )

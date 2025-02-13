@@ -5,31 +5,8 @@ import { TokenContext } from './TokenContext';
 import {  z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import axios from 'axios';
 
-
-async function LoginUser(credentials) {
-    try{
-        const response = await fetch('http://ec2-3-76-10-130.eu-central-1.compute.amazonaws.com:4000/api/v1/auth/signing',{
-            method: 'POST',
-            headers:{
-                'Content-Type' :'application/json'
-            },
-            body: JSON.stringify(credentials)
-        })
-            if(!response.ok){
-                console.error('invalid username or password');
-            }
-            const result = await response.json();
-            if(!response.ok){
-                throw new Error(result.message || 'Invalid username or password');
-                setIsError(true)
-            }            
-            return result
-    }catch(error){
-        console.error('login error',error);
-        throw error;          
-    }
-}
 
 function Login() {
     const {setToken} = useContext(TokenContext)
@@ -40,38 +17,34 @@ function Login() {
     const [isError, setIsError] = useState(false)
 
     const schema= z.object({
-        userNameValue: z.string().min(2,"username must be at least 2 characters"),
+        userNameValue: z.string().min(4,"Username must be at least 4 characters"),
         passwordValue: z.string().min(5, "Password must be at least 5 characters ")
     }) 
 
     const {register, handleSubmit,formState:{errors},reset} = useForm({resolver: zodResolver(schema)});
+
     const onSubmit = async (data) => {
         setLoading(true);
         setMessage('');
         setIsError(false);
+        const newPost = {
+            username: data.userNameValue,
+            password: data.passwordValue
+        }        
         try {
-            const response = await LoginUser({
-                username: data.userNameValue,
-                password: data.passwordValue
-            }) 
-            
-            if(response.error){
-                throw new Error(response.error);
-            }
-
-            localStorage.setItem('token', response.data);
-            
-            setMessage("Login successfully!");
-            setToken(response.data);
-            navigate('/HomePage');
-            reset();
+            await axios.post('http://ec2-3-76-10-130.eu-central-1.compute.amazonaws.com:4000/api/v1/auth/signing', newPost)
+            .then(response =>{
+                const token = response.data.data;
+                setToken(token);
+                navigate('/HomePage');
+            })
         } catch (error) {
-            setMessage("Uersname or Password Invalid");
+            setMessage("Username or Password Invalid");
             setIsError(true);
-        } finally{
+        }finally{
             setLoading(false);
+            reset();
         }
-
     }
     return (
         <div className="login_container flex flex-col gap-2 justify-center items-center h-screen">
