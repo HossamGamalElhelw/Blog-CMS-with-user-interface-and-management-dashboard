@@ -8,10 +8,10 @@ function App() {
   return (
     <TokenProvider>
       <BrowserRouter>
-      <header>
-        <Navbar />
-      </header>
-      <ProtectedRoutes />
+        <header>
+          <Navbar />
+        </header>
+        <ProtectedRoutes />
       </BrowserRouter>
     </TokenProvider>
   );

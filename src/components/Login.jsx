@@ -32,12 +32,10 @@ function Login() {
             password: data.passwordValue
         }        
         try {
-            await axios.post('http://ec2-3-76-10-130.eu-central-1.compute.amazonaws.com:4000/api/v1/auth/signing', newPost)
-            .then(response =>{
+            const response = await axios.post('http://ec2-3-76-10-130.eu-central-1.compute.amazonaws.com:4000/api/v1/auth/signing', newPost)
                 const token = response.data.data;
                 setToken(token);
-                navigate('/HomePage');
-            })
+                navigate('/HomePage')
         } catch (error) {
             setMessage("Username or Password Invalid");
             setIsError(true);
