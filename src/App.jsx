@@ -1,20 +1,22 @@
-import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import { TokenProvider } from './components/TokenContext';
+import './App.css'
+import HomePage from './components/HomePage';
 import Navbar from './components/Navbar';
-import ProtectedRoutes from './components/ProtectRoutes';
 
 function App() {
+
+
   return (
-    <TokenProvider>
-      <BrowserRouter>
+    <>
       <header>
         <Navbar />
       </header>
-      <ProtectedRoutes />
-      </BrowserRouter>
-    </TokenProvider>
-  );
+      <main>
+        <section className="hero_section">
+          <HomePage />
+        </section>
+      </main>
+    </>
+  )
 }
 
-export default App;
+export default App

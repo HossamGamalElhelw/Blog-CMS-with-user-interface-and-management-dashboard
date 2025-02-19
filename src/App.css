@@ -1,6 +1,10 @@
 #root {
   max-width: 1990px;
   margin: 0;
+
+}
+.container{
+  padding: 0 2rem;
 }
 a{
   text-decoration: none;
